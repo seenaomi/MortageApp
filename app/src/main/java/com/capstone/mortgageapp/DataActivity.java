@@ -2,8 +2,6 @@ package com.capstone.mortgageapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.MediaStore;
-import android.text.Editable;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -53,6 +51,7 @@ public class DataActivity extends AppCompatActivity {
             mortgage.setAmount(amount);
             float rate = Float.parseFloat(rateString);
             mortgage.setRate(rate);
+            mortgage.setPreferences(this);
         } catch (NumberFormatException nfe) {
             mortgage.setAmount(100000.0f);
             mortgage.setRate(.035f);

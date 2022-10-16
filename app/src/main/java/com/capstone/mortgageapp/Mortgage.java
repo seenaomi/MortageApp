@@ -1,17 +1,36 @@
 package com.capstone.mortgageapp;
 
 import java.text.DecimalFormat;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class Mortgage {
     public final DecimalFormat MONEY = new DecimalFormat("$#,##0.00");
+    private static final String PREFERENCE_AMOUNT = "amount";
+    private static final String PREFERENCE_YEARS = "years";
+    private static final String PREFERENCE_RATE = "rate";
+
     private float amount;
     private int years;
     private float rate;
 
-    public Mortgage() {
-        setAmount(100000.0f);
-        setYears(30);
-        setRate(0.035f);
+    //Instantiate Mortage from preferences
+    public Mortgage(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        setAmount(pref.getFloat(PREFERENCE_AMOUNT, 100000.0f));
+        setYears(pref.getInt(PREFERENCE_YEARS, 30));
+        setRate(pref.getFloat(PREFERENCE_RATE, 0.035f));
+    }
+
+    //Write mortgage data to preferences
+    public void setPreferences(Context context){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putFloat(PREFERENCE_AMOUNT, amount);
+        editor.putInt(PREFERENCE_YEARS, years);
+        editor.putFloat(PREFERENCE_RATE, rate);
+        editor.commit();
     }
 
     public void setAmount(float newAmount){
